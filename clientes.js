@@ -21,12 +21,6 @@ class Cliente {
     nomeBaixa(){
         return this.nome.toLowerCase()
     }
-
-    detalhes(){
-        return `
-        Nome: ${this.nome}
-        `
-    }
 }
 
 class Telefone {
@@ -67,12 +61,6 @@ class Endereco {
     }
     ruaBaixa(){
         return this.rua.toLowerCase()
-    }
-
-    detalhes(){
-        return `
-        Estado: ${this.estado} Cidade: ${this.cidade} Rua: ${this.rua} Número: ${this.numero}
-        `
     }
 }
 
@@ -116,7 +104,12 @@ class Empresa {
         Razão social: ${this.razaoSocial}
         Nome fantasia: ${this.nomeFantasia}
         ----------------
-        ${this.clientes}
+        ${[...this.clientes].map(cliente => `
+        Nome: ${cliente.nome}
+        Estado: ${cliente.endereco.estado} Cidade: ${cliente.endereco.cidade} Rua: ${cliente.endereco.rua} Número: ${cliente.endereco.numero}
+        ${[...cliente.telefones].map(telefone => `
+        ddd: ${telefone.ddd} número: ${telefone.numero}`).join('')}
+        `).join('')}
         `
     }
 }
@@ -152,7 +145,7 @@ cli4.adicionarTelefone(tel2Cli4)
 tel1Cli5 = new Telefone('12', '82198282')
 tel2Cli5 = new Telefone('12', '873872722')
 endCli5 = new Endereco('sp', 'sjc', 'rua w', '728')
-cli5 = new Cliente('lele', '8737823298', endCli5)
+cli5 = new Cliente('lele furtado', '8737823298', endCli5)
 cli5.adicionarTelefone(tel1Cli5)
 cli5.adicionarTelefone(tel2Cli5)
 
@@ -167,3 +160,5 @@ emp.adicionarCliente(cli2)
 emp.adicionarCliente(cli3)
 emp.adicionarCliente(cli4)
 emp.adicionarCliente(cli5)
+
+console.log(emp.detalhes())
